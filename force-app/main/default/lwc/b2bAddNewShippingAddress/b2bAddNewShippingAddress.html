@@ -1,0 +1,82 @@
+<template>
+        <div class="slds-grid">
+            <div class="slds-col slds-size_2-of-3">
+            <lightning-combobox
+            label="Select Shipping Address"
+            value={value}
+            placeholder="Select Shipping Address"
+            options={options}
+            onchange={handleChange} ></lightning-combobox>
+            <p>{value}</p></br>
+            </div>
+            <div class="slds-col slds-size_1-of-3 slds-p-left_large">
+            <p>if Shipping Address is Not in the List please add a new Address</p>
+            <lightning-button variant="brand" label="Add New Address" icon-name="standard:address" title="Add New Address" onclick={showModalBox}>
+            </lightning-button>
+            </div>
+        </div>
+    <template if:true={showModal}>
+        <section role="dialog" tabindex="-1" aria-labelledby="modal-heading-01" aria-modal="true" aria-describedby="modal-content-id-1" class="slds-modal slds-fade-in-open">
+        <div class="slds-modal__container">
+             <!--modal header start -->
+            <header class="slds-modal__header">
+                <h3 id="modal-heading-02" class="slds-text-heading_medium slds-hyphenate">Shipping Address Details</h3>
+            </header>  
+      <!-- modal body start -->
+            <div class="slds-modal__content slds-p-around_medium" id="modal-content-id-2">
+                <div class="slds-grid slds-wrap">
+                    <div class="slds-p-horizontal--small slds-col slds-size_9-of-12 slds-m-bottom--medium" >
+                        <lightning-input type="text" label="Name" value={name} 
+                        onchange={nameChange} required></lightning-input>
+
+                        <lightning-textarea label="Street" value={street} 
+                        onchange={streetChange} ></lightning-textarea>
+
+                        <div class="slds-grid">
+                            <div class="slds-col slds-size_2-of-3 slds-p-right_small">
+                                <lightning-input type="text" label="City" value={city} 
+                                onchange={cityChange}></lightning-input>
+                            </div>
+                            <div class="slds-col slds-size_1-of-3">
+                                <lightning-input type="text" label="State" value={state} 
+                                onchange={stateChange}></lightning-input>
+                            </div>
+                        </div>
+                        <div class="slds-grid">
+                            <div class="slds-col slds-size_2-of-3 slds-p-right_small">
+                                <lightning-input type="text" label="Postal Code" value={postalCode} 
+                                onchange={postalCodeChange}></lightning-input>
+                            </div>
+                            <div class="slds-size_1-of-3">
+                                <lightning-input type="text" label="Country" value={country} 
+                                onchange={countryChange}></lightning-input>
+                            </div>
+                        </div>
+                        <div class="slds-grid">
+                            <div class="slds-col slds-size_2-of-3">
+                                <lightning-input class="slds-p-right_xx-large" type="checkbox" 
+                                label="Save For Future" onchange={handleCheck} checked>
+                                </lightning-input>
+                            </div>
+                            <div class="slds-col slds-size_2-of-3">
+                                <lightning-input class="slds-p-right_xx-large" type="checkbox" 
+                                    label="is Default Address" onchange={handleDefault} checked>
+                                </lightning-input>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+            </div>
+
+            <!--modal footer start-->
+            <footer class="slds-modal__footer">
+                <button class="slds-button slds-button_neutral" onclick={hideModalBox}>Cancel</button>
+                <lightning-button label="Save" variant="brand" onclick={addNewAddress}></lightning-button>
+            </footer>
+        
+        </div>
+        </section>
+        <div class="slds-backdrop slds-backdrop_open"></div>
+    </template>
+</template>

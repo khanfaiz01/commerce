@@ -1,0 +1,27 @@
+<template>
+    <lightning-progress-indicator current-step={currentStage} type="base" variant="base">
+
+        <lightning-progress-step label="Shipping/Billing Address" value="1">
+        </lightning-progress-step>
+
+        <lightning-progress-step label="Order Review" value="2">
+        </lightning-progress-step>
+
+        <lightning-progress-step label="Payment" value="3">
+        </lightning-progress-step>
+
+        <lightning-progress-step label="Order Confirmation" value="4">
+        </lightning-progress-step>
+
+     </lightning-progress-indicator>
+     
+     <div class="slds-progress">
+        <ol class="slds-progress__list">
+            <div style="margin-left: -0.5rem;">Shipping/Billing Address</div>
+            <div class="slds-p-right_xx-large">Order Review</div>
+            <div>Payment</div>
+            <div style="margin-right: -0.9rem;">Order Confirmation</div>
+        </ol>
+     </div>
+</template>
+

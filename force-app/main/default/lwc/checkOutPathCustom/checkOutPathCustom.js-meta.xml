@@ -1,0 +1,24 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<LightningComponentBundle xmlns="http://soap.sforce.com/2006/04/metadata">
+    <apiVersion>55.0</apiVersion>
+    <isExposed>true</isExposed>
+    <targets>
+        <target>lightning__FlowScreen</target>
+        <target>lightningCommunity__Page</target>
+    </targets>
+    <masterLabel>Dynamic Flow Progress</masterLabel>
+    <targetConfigs>
+        <targetConfig targets="lightning__FlowScreen">
+
+            <property   label="Current Stage"
+                        name="currentStage"
+                        type="String"
+                        description="Current Stage for the Progress Indicator" />
+
+            <property   label="All Stages"
+                        name="stages"
+                        type="String"
+                        description="Example: Step 1,Step 2,Step 3. Recommend storing this in a constant." />
+        </targetConfig>
+    </targetConfigs>
+</LightningComponentBundle>

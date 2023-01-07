@@ -1,0 +1,172 @@
+<template>
+    <div class="bgcolorcls">
+        <template if:true={pageLoading}>
+            <lightning-spinner class="pageLoadingStyle" alternative-text="Loading" size="medium"></lightning-spinner>
+        </template>
+        <div class="main-container slds-grid slds-grid_vertical slds-gutters">
+
+            <div class="slds-col slds-var-p-bottom_medium ">
+
+                <template if:true={errorCheck}>
+                    <div class="error slds-var-p-around_x-small slds-var-p-top_small" role="alert">
+                        <span>{errorMessage}</span>
+                    </div>
+                </template>
+
+            </div>
+
+<!-- -------------------------------------------------------------------------------------------------------------------------- -->
+            <!-- FirstName Input -->
+            
+            <div class="slds-col">
+
+                <div class="slds-form-element">
+                    <div class="slds-form-element__control slds-input-has-icon slds-input-has-icon_left tooltip">
+                        <lightning-icon class="input-icon" icon-name="utility:user" alternative-text="username"
+                            size="xx-small"></lightning-icon>
+                        <input type="text" data-id="inputFirstName" placeholder="First Name"
+                            class="slds-input input-element" value={firstName} onchange={handleFirstNameChange}
+                            required />
+                        <span class={tooltip_field}>This field is required.</span>
+                    </div>
+                </div>
+
+            </div>
+ <!-- ---------------------------------------------------------------------------------------------------------------------------- -->
+            <!-- LastName Input -->
+
+            <div class="slds-col">
+
+                <div class="slds-form-element">
+                    <div class="slds-form-element__control slds-input-has-icon slds-input-has-icon_left tooltip">
+                        <lightning-icon class="input-icon" icon-name="utility:user" alternative-text="username"
+                            size="xx-small"></lightning-icon>
+
+                        <input type="text" data-id="inputLastName" placeholder="Last Name"
+                            class="slds-input input-element" value={lastName} onchange={handleLastNameChange}
+                            required />
+
+                        <span class={tooltip_field}>This field is required.</span>
+                    </div>
+                    
+                </div>
+            </div>
+<!-- -------------------------------------------------------------------------------------------------------------------------- -->
+            <!-- Email Input -->
+
+            <div class="slds-col tooltipEmail">
+
+                <div class="slds-form-element">
+                    <div class="slds-form-element__control slds-input-has-icon slds-input-has-icon_left tooltip"
+                        onmouseover={handleEmailHover}>
+                        <lightning-icon class="input-icon" icon-name="utility:email" alternative-text="username"
+                            size="xx-small"></lightning-icon>
+                        <input type="text" data-id="inputEmail" placeholder="Email" class="slds-input input-element"
+                            value={email} onkeyup={handleEmailChange} pattern="^[^@\s]+@[^@\s]+\.[^@\s]+$"
+                            oninvalid={onEmailInvalid} oninput={onEmailInput} required />
+                        <span class={tooltip_field}>This field is required.</span>
+                        <span class={tooltip_style}>{emailError}</span>
+                        <span class={tooltip_field}>{emailError}</span>
+
+                    </div>
+                </div>
+            </div>
+
+ <!-- ---------------------------------------------------------------------------------------------------------------------------------- -->
+            <!-- username assignment -->
+
+            <div class="slds-col usernameColumn">
+
+                <div class="slds-form-element">
+                    <div class="slds-form-element__control slds-input-has-icon slds-input-has-icon_left tooltip">
+                        <lightning-icon class="input-icon" icon-name="utility:user" alternative-text="username"
+                            size="xx-small"></lightning-icon>
+                        <input type="text" data-id="inputUsername" placeholder="Username"
+                            class="slds-input input-element" value={userName} disabled required />
+                        <span class={tooltip_style}>Username will be used to sign in to Community
+                            account</span>
+                        <span class={tooltip_field}>This field is required.</span>
+                    </div>
+                </div>
+
+            </div>
+<!---------------------------------------------------------------------------------------------------------------------------------- -->
+
+            <!-- Phone Number -->
+
+            <div class="slds-col">
+
+                <div class="slds-form-element">
+                    <div class="slds-form-element__control slds-input-has-icon slds-input-has-icon_left tooltip">
+                        <lightning-icon class="input-icon" icon-name="utility:call" alternative-text="username"
+                            size="xx-small"></lightning-icon>
+                        <input type="text"  placeholder="Phone Number"
+                            class="slds-input input-element" value={phone} onchange={handlePhoneChange}
+                            pattern="[0-9]{3}-[0-9]{3}-[0-9]{4}$" message-when-pattern-mismatch="Please enter a valid phone number" required />
+                            <!-- <span class="tooltiptext">Phone number must be in the formate of 000-000-0000</span> -->
+                        <span class={tooltip_field}>This field is required.</span>
+                    </div>
+                </div>
+
+            </div>
+
+
+
+<!-- --------------------------------------------------------------------------------------------------------------------------------- -->
+
+            <!-- Password  -->
+
+            <div class="slds-col">
+
+                <div class="slds-form-element">
+                    <div class="slds-form-element__control slds-input-has-icon slds-input-has-icon_left tooltip">
+                        <lightning-icon class="input-icon" icon-name="utility:lock" alternative-text="username"
+                            size="xx-small"></lightning-icon>
+                        <input type="password" data-id="inputPassword" placeholder="Create Password"
+                            class="slds-input input-element" value={password} onchange={handlePasswordChange}
+                            pattern="^(?=.*[A-Za-z])(?=.*\d)(?=.*[@$!%*#?&])[A-Za-z\d@$!%*#?&]{8,}$" required />
+                        <span class="tooltiptext">This field is required.Password must be Minimum eight characters, at
+                            least one letter, one number and one special character</span>
+                            <span class={tooltip_field}>This field is required.</span>
+                        <span class={passwordTooltiperror}>{passwordError}</span>
+                    </div>
+                </div>
+
+            </div>
+<!-- ---------------------------------------------------------------------------------------------------------------------------------------- -->
+
+            <!-- Confirm password and validation -->
+
+            <div class="slds-col">
+
+                <div class="slds-form-element">
+                    <div class="slds-form-element__control slds-input-has-icon slds-input-has-icon_left tooltip">
+                        <lightning-icon class="input-icon" icon-name="utility:lock" alternative-text="username"
+                            size="xx-small"></lightning-icon>
+                        <input type="password" data-id="inputConfirmPassword" placeholder="Confirm Password"
+                            class="slds-input input-element" value={confirmPassword}
+                            onchange={handleConfirmPasswordChange}
+                            pattern="^(?=.*[A-Za-z])(?=.*\d)(?=.*[@$!%*#?&])[A-Za-z\d@$!%*#?&]{8,}$" required />
+                            <span class={tooltip_field}>This field is required.</span>
+                        <span class={passwordTooltiperror}>{passwordError}</span>
+                    </div>
+                </div>
+
+            </div>
+<!-- ------------------------------------------------------------------------------------------------------------------------------- -->
+            <!-- Signup Button -->
+            <div class="slds-col">
+                <button type="submit" class="login-button slds-button" onclick={handleRegister}>Sign Up</button>
+            </div>
+
+            <div class="slds-col">
+                <p class="text-align-center slds-var-p-around_medium">
+                    <a href="/s/login" class="sub-heading register-heading">Already have an account?</a>
+                </p>
+
+            </div>
+
+        </div>
+    </div>
+
+</template>

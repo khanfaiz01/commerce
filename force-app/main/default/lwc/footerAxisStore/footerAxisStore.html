@@ -1,0 +1,190 @@
+<template >
+	<div class="slds-var-p-around_medium slds-border_top header_color">
+		<footer>
+			<div class="slds-grid slds-wrap">
+				<div class="slds-col slds-size_1-of-1 slds-medium-size_5-of-12 slds-large-size_5-of-12 mobile_text_center">
+					
+						<div class="roleHeading mobile_text_center">{ABOUT_COMPANY.NAME}</div>
+						<div>
+							<p class="font16 slds-p-right_large">{COMPANY_SUMMARY.DESCRIPTION}</p>
+						</div>
+	<!-- ------------------------------------------------------------------------------------------------------------------------ -->
+			<!-- Contact Us Button will show diffrent fields for guestUser and registerUser -->
+
+        <lightning-button variant="success" label="Contact Us" icon-name="utility:call" title="Contact Us" onclick={showModalBox}>
+			</lightning-button>
+
+			<!-- modal start --> 
+		<template if:true={isGuestUser}>    
+			<template if:true={isShowModal}>
+
+			<section role="dialog" tabindex="-1" aria-labelledby="modal-heading-01" aria-modal="true" aria-describedby="modal-content-id-1" class="slds-modal slds-fade-in-open">
+			<div class="slds-modal__container">
+				 <!--modal header start -->
+				<header class="slds-modal__header">
+					<button class="slds-button slds-button_icon slds-modal__close slds-button_icon-inverse" title="Close" onclick={hideModalBox}>
+						<lightning-icon icon-name="utility:close"
+						alternative-text="close"
+						variant="inverse"
+						size="small" ></lightning-icon>
+						<span class="slds-assistive-text">Close</span>
+					</button>
+					<h3 id="modal-heading-01" class="slds-text-heading_medium slds-hyphenate">Fill This Form to Reach Out Us</h3>
+				</header> 
+      
+          <!-- modal body start -->
+				<div class="slds-modal__content slds-p-around_medium" id="modal-content-id-1">
+					<div class="slds-grid slds-wrap">
+
+						<div class="slds-p-horizontal--small slds-col slds-size_6-of-12 slds-m-bottom--medium">
+							<div class="slds-form-element">
+								<lightning-input label="First Name" value={firstName} onchange={leadChangefirst}></lightning-input>
+							</div>
+						</div>
+
+						<div class="slds-p-horizontal--small slds-col slds-size_6-of-12 slds-m-bottom--medium">
+							<div class="slds-form-element">
+							<lightning-input label="Last Name" value={lastName} onchange={leadChangelast}></lightning-input>
+							</div>
+						</div>
+
+						<div class="slds-p-horizontal--small slds-col slds-size_6-of-12 slds-m-bottom--medium">
+							<div class="slds-form-element">
+							<lightning-input label="Email" value={email} onchange={leadChangeemail}></lightning-input>
+							</div>
+						</div>
+
+						<div class="slds-p-horizontal--small slds-col slds-size_6-of-12 slds-m-bottom--medium">
+							<div class="slds-form-element">
+							<lightning-input label="Company" value={company} onchange={leadChangecomp}></lightning-input>
+							</div>
+						</div>
+
+						<div class="slds-p-horizontal--small slds-col slds-size_6-of-12 slds-m-bottom--medium">
+							<div class="slds-form-element">
+							<lightning-input label="Comments" value={description} onchange={leadChangedesc}></lightning-input>
+							</div>
+						</div>
+
+						<div class="slds-p-horizontal--small slds-col slds-size_6-of-12 slds-m-bottom--medium">
+							<div class="slds-form-element slds-p-top_large ">
+							<lightning-button label="Submit Record" variant="brand" onclick={insertLeadAction}></lightning-button>
+							</div>
+						</div>
+							
+					</div>
+					
+				</div>
+
+				<!--modal footer start-->
+				<footer class="slds-modal__footer">
+					<button class="slds-button slds-button_neutral" onclick={hideModalBox}>Cancel</button>
+				</footer>
+			
+			</div>
+			</section>
+			<div class="slds-backdrop slds-backdrop_open"></div>
+			</template>
+		</template> 
+			<!-- Modal Box end--> 
+<!-- -------------------------------------------------------------------------------------------------------------------------- -->
+		<!-- Case Creation -->
+
+		<template if:false={isGuestUser}>
+		<template if:true={isShowModal}>
+
+			<section role="dialog" tabindex="-1" aria-labelledby="modal-heading-01" aria-modal="true" aria-describedby="modal-content-id-1" class="slds-modal slds-fade-in-open">
+			<div class="slds-modal__container">
+				 <!--modal header start -->
+				<header class="slds-modal__header">
+					<button class="slds-button slds-button_icon slds-modal__close slds-button_icon-inverse" title="Close" onclick={hideModalBox}>
+						<lightning-icon icon-name="utility:close"
+						alternative-text="close"
+						variant="inverse"
+						size="small" ></lightning-icon>
+						<span class="slds-assistive-text">Close</span>
+					</button>
+					<h3 id="modal-heading-02" class="slds-text-heading_medium slds-hyphenate">Fill This Form to Generate a Case</h3>
+				</header> 
+      
+          <!-- modal body start -->
+				<div class="slds-modal__content slds-p-around_medium" id="modal-content-id-2">
+					<div class="slds-grid slds-wrap">
+						<div class="slds-p-horizontal--small slds-col slds-size_9-of-12 slds-m-bottom--medium" >
+							<div class="slds-form-element">
+							<lightning-input label="Comments" value={description} onchange={caseChangedesc}></lightning-input>
+							</div>
+						</div>
+
+						<div class="slds-p-horizontal--small slds-col slds-size_6-of-12 slds-m-bottom--medium">
+							<div class="slds-form-element slds-p-top_large ">
+							<lightning-button label="Submit Record" variant="brand" onclick={createCaseAction}></lightning-button>
+							</div>
+						</div>
+					</div>
+
+				</div>
+
+				<!--modal footer start-->
+				<footer class="slds-modal__footer">
+					<button class="slds-button slds-button_neutral" onclick={hideModalBox}>Cancel</button>
+				</footer>
+			
+			</div>
+			</section>
+			<div class="slds-backdrop slds-backdrop_open"></div>
+			</template>
+		   </template>
+            
+	<!-- ----------------------------------------------------------------------------------------------------------------------- -->
+				</div>
+				<div class="slds-col slds-size_1-of-1 slds-medium-size_4-of-12 slds-large-size_4-of-12 m-auto">
+					<div class="roleHeading mobile_text_center">CONTACT</div>
+					<ul class="small_font">
+						<li class="slds-var-m-bottom_small">
+							<a href={emailLink} class="link">
+								<lightning-icon icon-name="utility:home" alternative-text="home!" size="x-small"
+									title="home" class="slds-var-m-right_small"></lightning-icon>
+									{ABOUT_COMPANY.HOME}
+							</a>
+						</li>
+						<li class="slds-var-m-bottom_small">
+							<a href={emailLink} class="link">
+								<lightning-icon icon-name="utility:email" alternative-text="email!" size="x-small"
+									title="email" class="slds-var-m-right_small"></lightning-icon>
+									{ABOUT_COMPANY.EMAIL}
+							</a>
+						</li>
+						<li class="slds-var-m-bottom_small">
+							<a href={phoneLink} class="link">
+								<lightning-icon icon-name="utility:dialing" alternative-text="dialing!" size="x-small" title="dialing"
+									class="slds-var-m-right_small"></lightning-icon>
+								{ABOUT_COMPANY.PHONE}
+							</a>
+						</li>
+						<li class="slds-var-m-bottom_small">
+							<a href={phoneLink} class="link">
+								<lightning-icon icon-name="utility:chat" alternative-text="chat!" size="x-small" title="dialing"
+									class="slds-var-m-right_small"></lightning-icon>
+								{ABOUT_COMPANY.CHAT}
+							</a>
+						</li>
+					</ul>
+				</div>
+				<div class="slds-col slds-size_1-of-1 slds-medium-size_3-of-12 slds-large-size_3-of-12 m-auto">
+					<div class="roleHeading mobile_text_center">FOLLOW US</div>
+					<ul class="small_font">
+						<template for:each={SOCIAL_LINKS} for:item="item">
+							<li class="slds-var-m-bottom_small" key={item.type}>
+								<a href={item.link} target="_blank" class="link">
+								 <img src={item.icon} alt={item.type} width="20px" class="slds-var-m-right_small" />
+								<span>{item.label}</span>
+								</a>
+							</li>
+						</template>
+					</ul>
+				</div>
+			</div>
+		</footer>
+	</div>
+</template>

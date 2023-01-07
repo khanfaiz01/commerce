@@ -1,0 +1,85 @@
+<template>
+    <lightning-layout multiple-rows>
+        <lightning-layout-item size="10">
+            <lightning-input label="FirstName" type="text" data-id="inputFirstName" value={firstName} placeholder="First Name" 
+            onchange={handlefisrtName} required></lightning-input>
+        </lightning-layout-item>
+    <!-- --------------------------------------------------------------------------------------------------- -->
+        <lightning-layout-item size="10">
+            <lightning-input label="LastName" type="text"  value={LastName} placeholder=" Last Name"
+            onchange={handleLastName} required></lightning-input>
+        </lightning-layout-item>
+
+    <!-- -------------------------------------------------------------------------------------------------------- -->
+        <lightning-layout-item size="10">
+            <lightning-input label="Email" type="email" value={email} placeholder="Email" 
+            onchange={handleEmail} required></lightning-input>
+            <div class={Tooltiperror} style="color: red;">
+                {emailError}
+            </div>
+        </lightning-layout-item>
+
+    <!-- ------------------------------------------------------------------------------------------------------- -->
+        <lightning-layout-item size="10">
+            <div class="slds-grid">
+                <div class="slds-size_5-of-5">
+                    <lightning-input label="UserName" type="text" value={userName} placeholder="UserName" disabled required>
+                    </lightning-input>
+                </div>
+                <div class="slds-size_1-of-5">
+                    <lightning-helptext content="Username will used to sign in to community"></lightning-helptext>
+                </div>
+            </div>
+        </lightning-layout-item>
+    <!-- -------------------------------------------------------------------------------------------------------- -->
+        <lightning-layout-item size="10">
+            <lightning-input label="Phone" type="tel" value={phone} placeholder="Phone" 
+            onchange={handlePhone} required></lightning-input>
+            <div class={Tooltiperror} style="color: red;">
+                {phoneError}
+            </div>
+        </lightning-layout-item>
+
+    <!-- --------------------------------------------------------------------------------------------------------- -->
+    <lightning-layout-item size="10">
+        <div class="slds-grid">
+            <div class="slds-size_5-of-5">
+                <lightning-input label="Password" type="Password" value={password} placeholder="Enter a Password" 
+                onchange={handlePassword} 
+                pattern="(?=^.{8,}$)(?=.*\d)(?=.*[!@#$%^&*]+)(?![.\n])(?=.*[A-Z])(?=.*[a-z]).*$" required></lightning-input>
+            </div>
+            <div class="slds-size_5-of-5">
+                <lightning-helptext content="password must be Minimum of 8 characters, 
+                    at least one number and one special character"></lightning-helptext>
+            </div>  
+        </div>
+    </lightning-layout-item>
+    <!-- ----------------------------------------------------------------------------------------------------------- -->
+    <lightning-layout-item size="10">
+        <lightning-input label="Confirm Password" type="Password" value={confirmPassword} placeholder="Confirm Password" 
+        onchange={handleConfirmPassword} 
+        pattern="(?=^.{8,}$)(?=.*\d)(?=.*[!@#$%^&*]+)(?![.\n])(?=.*[A-Z])(?=.*[a-z]).*$" required></lightning-input>
+            <div class={Tooltiperror} style="color: red;">
+                {passwordError}
+            </div>
+    </lightning-layout-item>
+    </lightning-layout>
+<!-- ------------------------------------------------------------------------------------------------------------ -->
+    <lightning-layout multiple-rows>
+            <lightning-layout-item size="10">
+            <div class="slds-col">
+                <div class="slds-p-top_x-small">
+                    <lightning-button variant="brand" label="Signup" title="Primary action" 
+                    onclick={handleRegister} class="slds-m-left_x-medium slds-align_absolute-center"></lightning-button>
+                </div>
+            </div>
+        </lightning-layout-item>
+        <lightning-layout-item size="10">
+            <div>
+                <p class="slds-align_absolute-center slds-var-p-around_medium">
+                    <a href="/s/login" class="sub-heading register-heading">Already have an Account</a>
+                </p>
+            </div>
+        </lightning-layout-item>
+    </lightning-layout>
+</template>
