@@ -33,7 +33,6 @@ const LOCKED_CART_STATUSES = new Set(['Processing', 'Checkout']);
  * @fires CartContents#cartchanged
  * @fires CartContents#cartitemsupdated
  */
-
 export default class CartContents extends NavigationMixin(LightningElement) {
     /**
      * An event fired when the cart changes.
@@ -139,6 +138,8 @@ export default class CartContents extends NavigationMixin(LightningElement) {
      */
     @api
     recordId;
+
+    @track cartMap=[];
 
     /**
      * The effectiveAccountId provided by the cart detail flexipage.
@@ -254,7 +255,6 @@ export default class CartContents extends NavigationMixin(LightningElement) {
             NameDesc: 'Name - Z to A'
         };
     }
-
     /**
      * Gets the cart header along with the current number of cart items
      *

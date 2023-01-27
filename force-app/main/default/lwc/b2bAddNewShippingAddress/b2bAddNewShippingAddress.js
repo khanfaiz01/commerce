@@ -1,8 +1,10 @@
-import { LightningElement,track } from 'lwc';
+import { LightningElement,track, api } from 'lwc';
 import UId from '@salesforce/user/Id';
 import newShippingAddress from '@salesforce/apex/B2b_NewShippingAddress.newShippingAddress';
 import { ShowToastEvent } from 'lightning/platformShowToastEvent';
 import  getShippingAddress from '@salesforce/apex/B2b_NewShippingAddress.getShippingAddress';
+import  getcpaId from '@salesforce/apex/B2b_NewShippingAddress.getcpaId';
+import { FlowAttributeChangeEvent } from 'lightning/flowSupport';
 
 export default class B2bAddNewShippingAddress extends LightningElement {
     showModal = false;
@@ -13,9 +15,16 @@ export default class B2bAddNewShippingAddress extends LightningElement {
     postalCode;
     country;
     UserId =UId;
+    saveforfuture = true;
+    isdefault = false;
+    @api shippingInstruction;
+    @api cartId;
 
     value;
     options;
+    ShippingValue = this.value;
+    cpAddress;
+    @api cpId;
     connectedCallback(){
         this.getOptions();
     }
@@ -23,15 +32,17 @@ export default class B2bAddNewShippingAddress extends LightningElement {
         getShippingAddress({userId:this.UserId})
           .then((result) => {
              let options = [];
+             
             if (result) {
               result.forEach(r => {
                 options.push({
-                  label: r.Name,
+                  label: r.Name ,
                   value: r.Name+', '+r.Street+', '+r.City+', '+r.State+', '+r.PostalCode+', '+r.Country,
                 });
               });
             }
             this.options = options;
+
           })
           .catch((error) => {
             // handle Error
@@ -41,8 +52,36 @@ export default class B2bAddNewShippingAddress extends LightningElement {
 
     handleChange(event) {
         this.value = event.detail.value;
-    }
+        this.cpAddress = event.target.options.find(opt => opt.value === event.detail.value).label;
 
+        getcpaId({label : this.cpAddress})
+        .then((result)=>
+        {
+            this.cpId = result;
+            console.log(this.cpId);
+        })
+
+        this.dispatchEvent(new FlowAttributeChangeEvent('ContactPointAddressId', this.shippingInstruction));
+
+
+    }
+    handleCheck(){
+        if(this.saveforfuture){
+            this.saveforfuture = false;
+        }
+        else{
+            this.saveforfuture = true;
+
+        }
+    }
+    handleInstruction(event){
+        this.shippingInstruction = event.target.value;
+        this.dispatchEvent(new FlowAttributeChangeEvent('shippingInstruction', this.cpLabelId));
+
+    }
+    handleDefault(event){
+        this.isdefault = event.target.checked;
+    }
     showModalBox(){  
         this.showModal = true;
     }
@@ -69,8 +108,9 @@ export default class B2bAddNewShippingAddress extends LightningElement {
     }
 
     addNewAddress(){
+        if(this.saveforfuture){
         newShippingAddress({name:this.name,street:this.street,city:this.city,state:this.state,
-            postalCode:this.postalCode,country:this.country,userId:this.UserId})
+            postalCode:this.postalCode,country:this.country,userId:this.UserId,Isdef:this.isdefault})
         .then(result => {
             this.message = result;
             this.error = undefined;
@@ -107,6 +147,47 @@ export default class B2bAddNewShippingAddress extends LightningElement {
             );
             console.log("error", JSON.stringify(this.error));
         });
+    }
+    else{
+        cartDelivery({name:this.name,street:this.street,city:this.city,state:this.state,
+            postal:this.postalCode,country:this.country,cartId:this.cartId})
+        .then(result1 => {
+            this.message = result1;
+            this.error = undefined;
+            console.log('cartId : '+this.cartId)
+            if(this.message !== undefined) {
+                this.name='';
+                this.street='';
+                this.city='';
+                this.state = '';
+                this.postalCode='';
+                this.country='';
+                this.dispatchEvent(
+                    new ShowToastEvent({
+                        title: 'Success',
+                        message: 'New Address has been added to the CartDeliveryGroup successfully',
+                        variant: 'success',
+                    }),
+                );
+                this.showModal=false;
+            }
+            
+            console.log(JSON.stringify(result1));
+            console.log("result", this.message);
+        })
+        .catch(error => {
+            this.message = undefined;
+            this.error = error;
+            this.dispatchEvent(
+                new ShowToastEvent({
+                    title: 'Failed to Save the Address',
+                    message: error.body.message,
+                    variant: 'error',
+                }),
+            );
+            console.log("error", JSON.stringify(this.error));
+        }); 
+    }
 
 }
 }

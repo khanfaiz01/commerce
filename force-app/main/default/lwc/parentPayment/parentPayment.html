@@ -1,0 +1,21 @@
+<template>
+    <div if:true={POCheck}>
+        <c-b2b-credit-card></c-b2b-credit-card>
+    </div>
+    <div if:false={POCheck}>
+        <c-purchase-order
+        cart-id ={cartId}
+        ></c-purchase-order> 
+    </div>
+    <div class="slds-clearfix">
+        <div class="slds-float_right">
+            <p>
+                <button class="slds-button slds-button--brand checkoutbtnClass slds-p-vertical_xx-small"
+                    onclick={submitOrder} type="button">
+                    <span class="whiteFont">Submit Order</span>
+                </button>
+            </p>
+        </div>
+    </div>
+    
+</template>

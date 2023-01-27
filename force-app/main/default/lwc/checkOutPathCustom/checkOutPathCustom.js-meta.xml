@@ -16,7 +16,7 @@
                         description="Current Stage for the Progress Indicator" />
 
             <property   label="All Stages"
-                        name="stages"
+                        name="Stages"
                         type="String"
                         description="Example: Step 1,Step 2,Step 3. Recommend storing this in a constant." />
         </targetConfig>

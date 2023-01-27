@@ -1,10 +1,13 @@
 <template>
     <lightning-combobox
-    label="Select Billing Address"
+    label="SELECT BILLING ADDRESS"
     value={value}
     placeholder="Select Billing Address"
     options={options}
     onchange={handleChange} ></lightning-combobox>
-
-<p>{value}</p>
+    <div if:true={value}>
+        <c-child-shipping-address
+        billing-value={value}>
+        </c-child-shipping-address>
+    </div>
 </template>

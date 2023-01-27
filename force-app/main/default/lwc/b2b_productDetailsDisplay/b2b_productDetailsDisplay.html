@@ -50,7 +50,12 @@
                     ></lightning-icon>
                     <span class="slds-p-horizontal_small">Out of stock</span>
                 </div>
-                <p>Available to Buy : {inventorydetails.Available_For_Purchase__c}</p>
+                <div if:true={inStock}>
+                    <p>Available to Buy : {inventorydetails.Available_For_Purchase__c}</p>
+                </div>
+                <div if:false={inStock}>
+                    No Quantity Available
+                </div>
             </div>
             
             <div class="price">

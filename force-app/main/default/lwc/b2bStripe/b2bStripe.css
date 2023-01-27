@@ -1,0 +1,24 @@
+.lgc-bg-inverse {
+    /* padding-top: 5%; */
+    /* background-color: rgb(22, 65, 130); */
+    font-weight: bold;
+    font-style: italic;
+    height:fit-content;
+    
+    
+}
+.slds-c-button-brand-color-background-active{
+    background-color: #598dc2;
+}
+.buttonbox{
+    margin-top: 6%;
+    height:fit-content;
+    background-color: rgb(166, 163, 163);
+    
+}
+.summary{
+    align-self: center;
+}
+.value{
+    align-self: flex-end;
+}

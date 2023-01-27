@@ -1,0 +1,64 @@
+<template>
+    <table class="slds-table slds-table_cell-buffer slds-table_bordered">
+        <!--Column Header start-->
+        <thead>
+            <tr class="slds-line-height_reset">
+                <th class="" scope="col">
+                    <div class="slds-truncate" title="Name">item</div>
+                </th>
+                <th class="" scope="col">
+                    <div class="slds-truncate" title="Sku">SKU</div>
+                </th>
+                <th class="" scope="col">
+                    <div class="slds-truncate" title="Price per item">Price per item
+                    </div>
+                </th>
+                <th class="" scope="col">
+                    <div class="slds-truncate" title="Quantity">Quantity</div>
+                </th>
+                <th class="" scope="col">
+                    <div class="slds-truncate" title="Total">Total</div>
+                </th>
+            </tr>
+        </thead>
+        <tbody>
+            <!--data is an array of record which is set in .js file-->
+            <template for:each ={data} for:item="CartItem">
+                <tr key ={CartItem.Id}>
+                    <th scope="col">
+                        <div>
+                            {CartItem.Name}
+                            <!-- Product-1 -->
+                        </div>
+                    </th>
+                    <th scope="col">
+                        <div>
+                            {CartItem.Sku}
+                            <!-- Product-1 -->
+                        </div>
+                    </th>
+                    <th scope="col">
+                        <div>
+
+                            {CartItem.SalesPrice}
+                            <!-- 100$ -->
+
+                        </div>
+                    </th>
+                    <th scope="col">
+                        <div>
+
+                            <!-- 2 -->
+                            {CartItem.Quantity}
+                        </div>
+                    </th>
+                    <th scope="col">
+                        <div>
+                            {CartItem.TotalListPrice}
+                        </div>
+                    </th>
+                </tr>
+            </template>
+        </tbody>
+    </table>
+</template>

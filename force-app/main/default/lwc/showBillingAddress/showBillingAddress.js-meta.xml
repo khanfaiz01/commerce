@@ -7,4 +7,14 @@
         <target>lightning__RecordPage</target>
         <target>lightning__FlowScreen</target>
     </targets>
+    <targetConfigs>
+        <targetConfig targets="lightning__FlowScreen">
+            <property name="cpLabelId" label="ContactPointBillingAddressId" type="String"/>
+
+            <property   label="CartId"
+                        name="cartId"
+                        type="String"
+                        description="get the cart Id from the flow" />
+        </targetConfig>
+    </targetConfigs>
 </LightningComponentBundle>

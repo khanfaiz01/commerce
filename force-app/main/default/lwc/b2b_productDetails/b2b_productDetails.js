@@ -78,17 +78,16 @@ export default class B2b_productDetails extends LightningElement {
      * return available qty --------added custom
      */
     @track data ={};
-    @wire(getInventroyData,{
-        productId: '$recordId'
-    })
-    inventoryData(result){
-        if(result.data)
-        {
-            let parsedData = JSON.parse(JSON.stringify(result));
-            this.data = parsedData.data;    
-        }
+    refreshInventory(){
+        getInventroyData({productId:this.recordId})
+        .then((result2)=>{
+            console.log('inside refresh method :'+result2.Available_For_Purchase__c);
+            this.data = result2;
+        })
+        .catch((error)=>{
+            console.log(error);
+        });
     }
-
     /**
      * The full product information retrieved.
      *
@@ -119,9 +118,14 @@ export default class B2b_productDetails extends LightningElement {
      * The connectedCallback() lifecycle hook fires when a component is inserted into the DOM.
      */
     connectedCallback() {
+        this.refreshInventory();
         this.updateCartInformation();
+       
     }
-
+    disconnectedCallback(){
+        console.log('inside disconnected');
+        this.refreshInventory();
+    }
     /**
      * Gets the normalized effective account of the user.
      *
@@ -201,7 +205,6 @@ export default class B2b_productDetails extends LightningElement {
         const cartStatus = (this.cartSummary || {}).status;
         return cartStatus === 'Processing' || cartStatus === 'Checkout';
     }
-
     /**
      * Handles a user request to add the product to their active cart.
      * On success, a success toast is shown to let the user know the product was added to their cart
@@ -233,6 +236,7 @@ export default class B2b_productDetails extends LightningElement {
         })
         
             .then(() => {
+                this.refreshInventory();
                 this.dispatchEvent(
                     new CustomEvent('cartchanged', {
                         bubbles: true,

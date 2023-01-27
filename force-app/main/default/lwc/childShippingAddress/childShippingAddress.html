@@ -1,0 +1,14 @@
+<template>
+    <div class="Change1">
+        <div if:true={billingValue} >
+                <div class="slds-m-top_large slds-box slds-theme_shade slds-theme_alert-texture">
+                    <strong>Billing Address : </strong>{billingValue}</div>
+        </div>
+    </div>
+    <div class="Change2">
+        <div if:true={shippingValue} >
+            <div class="slds-m-top_large slds-box slds-theme_shade slds-theme_alert-texture">
+                <strong>Shipping Address : </strong>{shippingValue}</div>
+        </div>
+    </div>
+</template>

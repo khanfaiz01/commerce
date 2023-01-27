@@ -168,7 +168,7 @@ public with sharing class B2BGetInfo {
     }
 
   //fetching data from the inventory------------------------
-  @AuraEnabled(cacheable=true)
+  @AuraEnabled(cacheable=false)
   public static Map<String,Object> getInventroyData(String productId){
     try {
       Http http = new Http();
@@ -217,7 +217,6 @@ public with sharing class B2BGetInfo {
     System.debug(response);
   }
 // updating the committed inventory--------------------------------
-
   public static void CommittedInventory(String orderSummaryId){
     List<OrderItemSummary> orderItems = [SELECT Id, OrderSummaryId, Quantity, StockKeepingUnit, Product2Id 
                                         FROM OrderItemSummary WHERE OrderSummaryId =:orderSummaryId];
