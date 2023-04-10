@@ -171,7 +171,7 @@ export default class B2bStripe extends LightningElement {
         setPaymentInfo({
             dataMap: dataMap
         }).then((result) => {
-            
+            console.log('PI Secrete : ',result.PI_Secret);
             if(result && result.PI_Secret){
                 result.billing_details = {
                     name : this.cart.CreatedBy.Name,

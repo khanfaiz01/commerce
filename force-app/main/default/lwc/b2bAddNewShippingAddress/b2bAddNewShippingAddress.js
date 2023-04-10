@@ -5,6 +5,8 @@ import { ShowToastEvent } from 'lightning/platformShowToastEvent';
 import  getShippingAddress from '@salesforce/apex/B2b_NewShippingAddress.getShippingAddress';
 import  getcpaId from '@salesforce/apex/B2b_NewShippingAddress.getcpaId';
 import { FlowAttributeChangeEvent } from 'lightning/flowSupport';
+import  orderShippingAddress from '@salesforce/apex/B2b_NewShippingAddress.orderShippingAddress';
+
 
 export default class B2bAddNewShippingAddress extends LightningElement {
     showModal = false;
@@ -15,10 +17,11 @@ export default class B2bAddNewShippingAddress extends LightningElement {
     postalCode;
     country;
     UserId =UId;
-    saveforfuture = true;
+    saveforfuture = false;
     isdefault = false;
     @api shippingInstruction;
     @api cartId;
+    clickedNewAddress = false;
 
     value;
     options;
@@ -60,23 +63,15 @@ export default class B2bAddNewShippingAddress extends LightningElement {
             this.cpId = result;
             console.log(this.cpId);
         })
-
-        this.dispatchEvent(new FlowAttributeChangeEvent('ContactPointAddressId', this.shippingInstruction));
-
+        this.dispatchEvent(new FlowAttributeChangeEvent('ContactPointAddressId', this.cpId));
 
     }
-    handleCheck(){
-        if(this.saveforfuture){
-            this.saveforfuture = false;
-        }
-        else{
-            this.saveforfuture = true;
-
-        }
+    handleCheck(event){
+        this.saveforfuture = event.target.checked;
     }
     handleInstruction(event){
         this.shippingInstruction = event.target.value;
-        this.dispatchEvent(new FlowAttributeChangeEvent('shippingInstruction', this.cpLabelId));
+        this.dispatchEvent(new FlowAttributeChangeEvent('shippingInstruction', this.shippingInstruction));
 
     }
     handleDefault(event){
@@ -84,9 +79,11 @@ export default class B2bAddNewShippingAddress extends LightningElement {
     }
     showModalBox(){  
         this.showModal = true;
+        this.clickedNewAddress = true;
     }
     hideModalBox(){
         this.showModal = false;
+        this.clickedNewAddress = false;
     }
     nameChange(event){
         this.name = event.target.value;
@@ -109,6 +106,7 @@ export default class B2bAddNewShippingAddress extends LightningElement {
 
     addNewAddress(){
         if(this.saveforfuture){
+        this.clickedNewAddress = false;
         newShippingAddress({name:this.name,street:this.street,city:this.city,state:this.state,
             postalCode:this.postalCode,country:this.country,userId:this.UserId,Isdef:this.isdefault})
         .then(result => {
@@ -149,10 +147,13 @@ export default class B2bAddNewShippingAddress extends LightningElement {
         });
     }
     else{
-        cartDelivery({name:this.name,street:this.street,city:this.city,state:this.state,
-            postal:this.postalCode,country:this.country,cartId:this.cartId})
+        console.log(this.cartId);
+        this.clickedNewAddress = true;
+        orderShippingAddress({name:this.name,street:this.street,city:this.city,state:this.state,
+            postalCode:this.postalCode,country:this.country,cartId:this.cartId})
         .then(result1 => {
             this.message = result1;
+            this.value = result1;
             this.error = undefined;
             console.log('cartId : '+this.cartId)
             if(this.message !== undefined) {

@@ -2,23 +2,24 @@ public without sharing class B2b_NewShippingAddress {
     public B2b_NewShippingAddress() {
 
     }
+    // this method is used to get the billing address of the contactPointAddress of account with
+    // associated user
     @AuraEnabled
     public static List<ContactPointAddress> getBillingAddress(String userId){
         User cname = [SELECT Id, ContactId from User WHERE Id=:userId];
         Contact Cntname  = [SELECT Id, AccountId, Name from Contact WHERE Id=:cname.ContactId];
         try {
-            List<ContactPointAddress> cntAddress = [SELECT Id,Name, City, State, PostalCode, Country 
+            List<ContactPointAddress> cntAddress = [SELECT Id,Name, City, State, PostalCode, Country,IsDefault
             from ContactPointAddress WHERE AddressType ='Billing' AND ParentId =:Cntname.AccountId];
             return cntAddress;
         } catch (Exception e) {
             throw new AuraHandledException(e.getMessage());
         }
     }
-
+    //this method is used to add a new Shipping Address at the ContactPoint addrees for the logged in user
     @AuraEnabled
     public static ContactPointAddress newShippingAddress(String name,String street, String city, 
                                     String state,String postalCode,String country, String userId,Boolean Isdef){
-        //ContactPointAddress conadd = [SELECT Id, Name, Address, AddressType FROM ContactPointAddress ];
         User cname = [SELECT Id, ContactId from User WHERE Id=:userId];
         Contact Cntname  = [SELECT Id, AccountId, Name from Contact WHERE Id=:cname.ContactId]; 
         ContactPointAddress ship = new ContactPointAddress();
@@ -34,19 +35,22 @@ public without sharing class B2b_NewShippingAddress {
         insert ship;
         return ship;
     }
-
+// this method is used for getting the shipping address of contactpoint address of a Account with
+// associated user
     @AuraEnabled
     public static List<ContactPointAddress> getShippingAddress(String userId){
         User cname = [SELECT Id, ContactId from User WHERE Id=:userId];
         Contact Cntname  = [SELECT Id, AccountId, Name from Contact WHERE Id=:cname.ContactId];
         try {
-            List<ContactPointAddress> shipAddress = [SELECT Id,Name,Street, City, State, PostalCode, Country 
+            List<ContactPointAddress> shipAddress = [SELECT Id,Name,Street, City, State, PostalCode, Country,IsDefault
             from ContactPointAddress WHERE AddressType ='Shipping' AND ParentId =:Cntname.AccountId];
             return shipAddress;
         } catch (Exception e) {
             throw new AuraHandledException(e.getMessage());
         }
     }
+    //by passing a label as a parameter in this method getting the Id of the Selected address
+    // where Label is the address selected by the user at the shipping and billing page of checkout
     @AuraEnabled
     public static String getcpaId(String label){
         try {
@@ -58,6 +62,9 @@ public without sharing class B2b_NewShippingAddress {
             throw new AuraHandledException(e.getMessage());
         }
     }
+
+    //updating the billing address in the cart when the user select a billing address
+    // by passing BillingAddressId and cart Id As a parameter
     @AuraEnabled
     public static Void updateCartBilling(String BillingId, String CartId){
         ContactPointAddress BillingAddrs = [SELECT Id,Name,IsDefault, City,Country,
@@ -77,7 +84,8 @@ public without sharing class B2b_NewShippingAddress {
         System.debug(BillingAddrs);
     }
 
-    // in this method i am getting the saved Billing Address of the cart using the cartId
+    // in this method I am getting the saved Billing Address of the cart using the cartId
+    // and Storing in a map-- used at the order review page 
     @AuraEnabled
     public static Map<String,Object> getCartBillingAddrs(String cartId){
         try {
@@ -97,6 +105,7 @@ public without sharing class B2b_NewShippingAddress {
         }
     }
     // getting the buyer information by passing the userId;
+    // used at the Order review Page
     @AuraEnabled
     public static Map<String,Object> getBuyerInfo(String UserId){
         try {
@@ -112,13 +121,12 @@ public without sharing class B2b_NewShippingAddress {
             throw new AuraHandledException(e.getMessage());
         }
     }
-    // this is the method to save the address without saving in contact point Address
+    // get the Saved address for the CartDelivery Group to show at the order Review Page
     @AuraEnabled
     public static Map<String,Object> getShip(String cartId){
         try {
-            CartDeliveryGroup cartShipping = [SELECT DeliverToName, DeliverToStreet, DeliverToCity, DeliverToState, 
-                                        DeliverToPostalCode,DeliverToCountry 
-                                        from CartDeliveryGroup where cartId=:cartId];
+            CartDeliveryGroup cartShipping = [SELECT DeliverToName, DeliverToStreet, DeliverToCity, 
+            DeliverToState, DeliverToPostalCode,DeliverToCountry from CartDeliveryGroup where cartId=:cartId];
             
             Map<String,Object> dataMap = new Map<String,Object>();
             dataMap.put('name',cartShipping.DeliverToName);
@@ -140,38 +148,41 @@ public without sharing class B2b_NewShippingAddress {
         TotalListPrice from CartItem WHERE CartId=:cartId];
         return cs;     
     }
-
-    // this method will save the address in the cart Delivery Group when save for future is not true
+    // Total price of the current cart;
     @AuraEnabled
-    public static Void cartDelivery(String name,String street,String city,String state,
-                                String postal,String country,String cartId){
+    public static Map<String,Object> getCartTotal(String cartId){
         try {
-            CartDeliveryGroup cartShipping = [SELECT DeliverToName, DeliverToStreet, DeliverToCity, DeliverToState, 
-                                        DeliverToPostalCode,DeliverToCountry 
-                                        from CartDeliveryGroup where cartId=:cartId];
-            cartShipping.DeliverToName = name;
-            cartShipping.DeliverToStreet = street;
-            cartShipping.DeliverToCity = city;
-            cartShipping.DeliverToState = state;
-            cartShipping.DeliverToPostalCode = postal;
-            cartShipping.DeliverToCountry = country;
-            update cartShipping;
-
+            WebCart cartPrice = [SELECT Id, TotalTaxAmount,GrandTotalAmount,TotalChargeAmount,TotalProductAmount from WebCart WHERE Id=:cartId];
+            Map<String,Object> dataMap = new Map<String,Object>();
+            dataMap.put('TaxAmount',cartPrice.TotalTaxAmount);
+            dataMap.put('totalAmount',cartPrice.GrandTotalAmount);
+            dataMap.put('Ccost',cartPrice.TotalChargeAmount);
+            dataMap.put('stotal',cartPrice.TotalProductAmount);
+            return dataMap;
         } catch (Exception e) {
             throw new AuraHandledException(e.getMessage());
         }
     }
+    // it will Update the CartDelivery Group address when the SaveforFuture is not true;
     @AuraEnabled
-    public static Map<String,Object> getCartTotal(String cartId){
-        try {
-            WebCart crt = [SELECT Id, TotalTaxAmount,GrandTotalAmount,TotalChargeAmount,TotalProductAmount from WebCart WHERE Id=:cartId];
-            Map<String,Object> dataMap = new Map<String,Object>();
-            dataMap.put('tax',crt.TotalTaxAmount);
-            dataMap.put('total',crt.GrandTotalAmount);
-            dataMap.put('Ccost',crt.TotalChargeAmount);
-            dataMap.put('stotal',crt.TotalProductAmount);
-            return dataMap;
-        } catch (Exception e) {
+    public static String orderShippingAddress(String name,String street, String city,
+    String state,String postalCode,String country, String cartId )
+    {
+        try 
+        {
+            CartDeliveryGroup cdcart = [SELECT DeliverToAddress,DeliverToState,DeliverToCity,DeliverToPostalCode
+            ,DeliverToStreet, DeliverToCountry, DeliverToName FROM CartDeliveryGroup WHERE CartId =: cartId];
+            cdcart.DeliverToCity = city;
+            cdcart.DeliverToPostalCode=postalCode;
+            cdcart.DeliverToStreet = street;
+            cdcart.DeliverToState =  state;
+            cdcart.DeliverToCountry = country;
+            cdcart.DeliverToName = name;
+            String returnAddress = name + ' ' + street +' '+city +' '+state+' '+ postalCode + ' ' + country;
+            update cdcart;
+            return returnAddress;
+        }
+         catch (Exception e) {
             throw new AuraHandledException(e.getMessage());
         }
     }

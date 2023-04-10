@@ -1,0 +1,43 @@
+.slider-circle-orange {
+    width: 40px;
+    height: 40px;
+    background: #CA2C92;;
+    border: #CA2C92;;
+    border-radius: 50px;
+    text-align: center;
+    color: #fff;
+    padding-left: 5px;
+  }
+  .slider-circle-orange-border {
+    width: 40px;
+    height: 40px;
+    background: #CA2C92;
+    border: 1px solid grey;
+    border-radius: 50px;
+    text-align: center;
+    color: #fff;
+    padding-left: 5px;
+  }
+  .slds-progress-bar-gray {
+    background: #dddbda;
+  }
+  .slds-progress-bar-orange {
+    background: #CA2C92;;
+  }
+  .slider-circle-gray {
+    width: 40px;
+    height: 40px;
+    background: #dddbda;
+    border: #CA2C92;;
+    border-radius: 50px;
+    text-align: center;
+    color: #333;
+    padding-left: 4px;
+  }
+  .slds-progress__marker {
+    display: none !important;
+  }
+  .modalStyling {
+    width: var(--modalWidth, 100px) !important;
+  }
+  

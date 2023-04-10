@@ -12,14 +12,17 @@
                 </c-child-shipping-address>
             </div>
     </div>
+    <!-- ----------------------------------------------------------------------------------- -->
     <div class="slds-p-top_medium">
         <p>if Shipping Address is Not in the List please add a new Address</p>
     </div>
     <lightning-button variant="brand" label="Add New Address" icon-name="standard:address" title="Add New Address" onclick={showModalBox}>
     </lightning-button>
+    <!-- ----------------------------------------------------------------------------------- -->
     <div class="slds-p-top_small">
         <lightning-textarea name="Shipping Instruction" value={shippingInstruction} label="Shipping Instruction" onchange={handleInstruction}></lightning-textarea>
     </div>
+    <!-- ------------------------------------------------------------------------------------ -->
     <template if:true={showModal}>
         <section role="dialog" tabindex="-1" aria-labelledby="modal-heading-01" aria-modal="true" aria-describedby="modal-content-id-1" class="slds-modal slds-fade-in-open">
         <div class="slds-modal__container">
@@ -60,7 +63,7 @@
                         <div class="slds-grid">
                             <div class="slds-col slds-size_2-of-3">
                                 <lightning-input class="slds-p-right_xx-large" type="checkbox" 
-                                label="Save For Future" onchange={handleCheck} checked>
+                                label="Save For Future" onchange={handleCheck}>
                                 </lightning-input>
                             </div>
                             <div class="slds-col slds-size_2-of-3">

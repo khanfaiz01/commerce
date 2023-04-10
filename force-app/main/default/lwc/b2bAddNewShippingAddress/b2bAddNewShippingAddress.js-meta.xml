@@ -11,7 +11,7 @@
         <targetConfig targets="lightning__FlowScreen">
             <property name="cpId" label="ContactPointAddressId" type="String" role="outputOnly"/>
             <property name="shippingInstruction" label="Shipping Instruction" type="String" role="outputOnly"/>
-            <property name="cartId" label="Cart Id" type="String" role="outputOnly"/>
+            <property name="cartId" label="Cart Id" type="String"/>
         </targetConfig>
     </targetConfigs>
 </LightningComponentBundle>

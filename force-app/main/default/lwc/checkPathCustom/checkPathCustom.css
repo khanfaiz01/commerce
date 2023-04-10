@@ -1,0 +1,64 @@
+  .slds-progress li {
+    display: inline-block;
+    margin-right: 10rem;
+    position: relative;
+    margin-top: 2rem;
+  }
+  .slds-progress li::before {
+    content: '';
+    display: block;
+    position: absolute;
+    top: 50%;
+    left: -10rem;
+    right: 20rem;
+    width: 11rem;
+    height: 0.12rem;
+    background-color: orange;
+    transform: translateY(-100%);
+  }
+  .slds-progress li:first-child::before {
+    display: none;
+  }
+  .slds-progress li.slds-is-active button {
+    background-color: orange; /* add an orange active circle */
+    border-color: orange; /* add an orange border to the active circle */
+    color: #fff;
+  }
+  .slds-progress li.slds-is-active::before {
+    background-color: orange;
+  }
+  .slds-progress__marker_icon {
+    border-radius: 50%;
+    width: 2rem;
+    height: 2rem;
+    font-size: 1.1rem;
+    line-height: 2rem;
+    border: 2px solid orange;
+  }
+  .slds-progress__item:before {
+    background-color: orange; /* add an orange line */
+  }
+  .slds-progress__marker-label {
+    position: absolute;
+    top: -2.1rem;
+    left: 0;
+    width: 100%;
+    text-align: center;
+    font-size: 0.75rem;
+    color: #54698d;
+  }
+  .slds-progress__marker {
+    border-color: #ffa500;
+    color: #ffa500;
+    background-color: #fff;
+    padding: 0.625rem 0.75rem;
+    border-radius: 50%;
+    font-size: 0.75rem;
+    
+    padding-left: 0.6rem;
+  }
+
+/*  form here */
+
+  
+  

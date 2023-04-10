@@ -1,0 +1,48 @@
+<template>
+<div class="c-container">
+    <strong class="slds-p-left_small slds-m-bottom_large FONT_SIZE_8">General Information</strong>
+    <lightning-layout horizontal-align="space">
+        
+        <lightning-layout-item padding="around-small">
+            <div class="custom-box">
+                <strong class="slds-p-left_small">Buyer Info</strong>
+                <p class="slds-p-horizontal_small">{buyerInfo.name}</p>
+                <p class="slds-p-horizontal_small">{buyerInfo.phone}</p>
+                <p class="slds-p-horizontal_small">{buyerInfo.email}</p>
+                <p class="field-title1 slds-p-top_medium" title="Shipping Method">Shipping Method</p>
+                <lightning-input type="text" ></lightning-input>
+                <p class="field-title1 slds-p-top_medium" title="Shipping Instruction">Shipping Instruction</p>
+                <lightning-input type="text" ></lightning-input>
+            </div>
+        </lightning-layout-item>
+        <lightning-layout-item padding="around-small">
+            <div class="custom-box">
+                <lightning-combobox
+                    label="SELECT SHIPPING ADDRESS"
+                    value={value}
+                    placeholder="Select Shipping Address"
+                    options={options}
+                    onchange={handleChange} >
+                </lightning-combobox>
+                <strong class="slds-p-left_small">Shipping Information</strong>
+                <div class="slds-m-top_medium"> {value}</div>
+
+            </div>
+        </lightning-layout-item>
+        <lightning-layout-item padding="around-small">
+            <div class="custom-box">
+                <lightning-combobox
+                    label="SELECT BILLING ADDRESS"
+                    value={billingvalue}
+                    placeholder="Select Billing Address"
+                    options={options}
+                    onchange={handleBillingChange} >
+                </lightning-combobox>
+                <strong class="slds-p-left_small">Billing Information</strong>
+                <div class="slds-m-top_medium slds-is-relative">{billingvalue}</div>
+            </div>
+
+        </lightning-layout-item>
+    </lightning-layout>
+</div>
+</template>

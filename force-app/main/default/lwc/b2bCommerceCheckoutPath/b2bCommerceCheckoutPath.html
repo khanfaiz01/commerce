@@ -1,0 +1,54 @@
+<template>
+  <div class="slds-p-top_large slds-p-bottom_large">
+    <div class="slds-grid slds-p-bottom_small">
+      <!-- <div class="slds-col slds-size_2-of-12">
+        <span></span>
+      </div> -->
+
+      <div class="slds-col slds-size_3-of-12 slds-align_absolute-center"   style="padding-left: 114px;">
+        <span>Shipping Address</span>
+      </div>
+      <div class="slds-col slds-size_3-of-12 slds-align_absolute-center " style="padding-left: 32px;">
+        <span>Order Review </span>
+      </div>
+      <div class="slds-col slds-size_3-of-12 slds-align_absolute-center" style="padding-right: 44px;">
+        <span>Payment</span>
+      </div>
+      <div class="slds-col slds-size_3-of-12 slds-align_absolute-center" style="padding-right: 94px;">
+        <span>Order Confirmation</span>
+      </div>
+      <!-- <div class="slds-col slds-size_2-of-12">
+        <span></span>
+      </div> -->
+    </div>
+    <div class="slds-progress">
+      <ol class="slds-progress__list">
+        <template
+          if:true={steps}
+          for:each={steps}
+          for:item="stp"
+          for:index="index"
+        >
+          <li class="slds-progress__item slds-is-active" key={stp.value}>
+            <button class="slds-button" data-id={stp.value}>
+              <span class="">{stp.value}</span>
+            </button>
+          </li>
+        </template>
+      </ol>
+      <div
+        class="slds-progress-bar slds-progress-bar_x-small"
+        aria-valuemin="0"
+        aria-valuemax="100"
+        aria-valuenow="0"
+        role="progressbar"
+      >
+        <span
+          class="slds-progress-bar__value slds-progress-bar-orange modalStyling"
+        >
+          <span class="slds-assistive-text">Progress: 0%</span>
+        </span>
+      </div>
+    </div>
+  </div>
+</template>
