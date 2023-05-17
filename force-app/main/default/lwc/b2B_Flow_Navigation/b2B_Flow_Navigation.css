@@ -1,0 +1,6 @@
+.button-state {
+    display: flex;
+    justify-content: space-between;
+    font-weight: bold;
+    padding-top: 20px;
+  }

@@ -11,6 +11,7 @@ export default class B2b_checkOutSteps extends LightningElement {
     { label: "2", value: "2" },
     { label: "3", value: "3" },
     { label: "4", value: "4" },
+    { label: "5", value: "5" },
   ];
   shipping = false;
   get _shipping() {
@@ -38,6 +39,8 @@ export default class B2b_checkOutSteps extends LightningElement {
         " slider-circle-gray";
       this.template.querySelector('[data-id="4"]').className =
         " slider-circle-gray";
+      this.template.querySelector('[data-id="5"]').className =
+        " slider-circle-gray";
     }
     if (this.currentState == "2") {
       this.template.querySelector('[data-id="1"]').className =
@@ -47,6 +50,8 @@ export default class B2b_checkOutSteps extends LightningElement {
       this.template.querySelector('[data-id="3"]').className =
         " slider-circle-gray";
       this.template.querySelector('[data-id="4"]').className =
+        " slider-circle-gray";
+      this.template.querySelector('[data-id="5"]').className =
         " slider-circle-gray";
     }
     if (this.currentState == "3") {
@@ -58,6 +63,8 @@ export default class B2b_checkOutSteps extends LightningElement {
         " slider-circle-orange-border";
       this.template.querySelector('[data-id="4"]').className =
         " slider-circle-gray";
+      this.template.querySelector('[data-id="5"]').className =
+        " slider-circle-gray";
     }
     if (this.currentState == "4") {
       this.template.querySelector('[data-id="1"]').className =
@@ -67,6 +74,20 @@ export default class B2b_checkOutSteps extends LightningElement {
       this.template.querySelector('[data-id="3"]').className =
         " slider-circle-orange";
       this.template.querySelector('[data-id="4"]').className =
+        " slider-circle-orange-border";
+      this.template.querySelector('[data-id="5"]').className =
+        " slider-circle-gray";
+    }
+    if (this.currentState == "5") {
+      this.template.querySelector('[data-id="1"]').className =
+        "slider-circle-orange";
+      this.template.querySelector('[data-id="2"]').className =
+        " slider-circle-orange";
+      this.template.querySelector('[data-id="3"]').className =
+        " slider-circle-orange";
+      this.template.querySelector('[data-id="4"]').className =
+        " slider-circle-orange";
+      this.template.querySelector('[data-id="5"]').className =
         " slider-circle-orange-border";
     }
   }
@@ -84,6 +105,9 @@ export default class B2b_checkOutSteps extends LightningElement {
     }
     if (this.currentState == "4") {
       wid = 400;
+    }
+    if (this.currentState == "5") {
+      wid = 500;
     }
     css.setProperty("--modalWidth", wid);
   }
